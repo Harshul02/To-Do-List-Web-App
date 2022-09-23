@@ -1,5 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const mongoose = require("mongoose");
 const date = require(__dirname + "/date.js");
 
 const app = express();
@@ -13,6 +14,12 @@ let workItems = [];
 app.use(bodyParser.urlencoded({extended: true}));
 
 app.use(express.static("public"));
+
+mongoose.connect("mongodb://localhost:27017/todolistDB", {useNewUrlParser: true});
+
+const itemsSchema = {
+    name: String
+}
 
 app.get("/",function(req,res)
 {
