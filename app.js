@@ -64,17 +64,20 @@ app.post("/", function(req,res)
     });
     item.save();
     res.redirect("/");
-    // if(req.body.list === "Work")
-    // {
-    //     workItems.push(item);
-    //     res.redirect("/work");
-    // }
-    // else{
-    //     items.push(item);
-    //     res.redirect("/");
-    // }
-
 });
+
+app.post("/delete", function(req,res){
+    const checkedItemId = req.body.checkbox;
+
+    Item.findByIdAndRemove(checkedItemId, function(err){
+        if(err)
+        console.log(err);
+        else{
+            console.log("Successfully Deleted");
+            res.redirect("/");
+        }
+    })
+})
 
 app.get("/work", function(req,res)
 {
