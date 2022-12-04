@@ -2,6 +2,8 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const _ = require("lodash");
+require('dotenv').config()
+
 const app = express();
 
 app.set('view engine', 'ejs');
@@ -11,7 +13,7 @@ let workItems = [];
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
 
-mongoose.connect("mongodb://localhost:27017/todolistDB", {useNewUrlParser: true});
+mongoose.connect(process.env.DATABASE, {useNewUrlParser: true});
 
 const itemsSchema = {
     name: String
@@ -28,7 +30,7 @@ const item2 = new Item({
 });
 
 const item3 = new Item({
-    name: "<-- Hit this to delete an item."
+    name: "← Hit this to delete an item."
 });
 
 const defaultItems = [item1,item2,item3];
@@ -149,7 +151,7 @@ app.get("/:customListName", function(req,res)
 
 
 
-app.listen(3000, function()
+app.listen(process.env.PORT || 5000, function()
 {
-    console.log("Server is running on port 3000");
+    console.log("Server is running on port 5000");
 })
